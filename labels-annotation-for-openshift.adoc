@@ -1,0 +1,228 @@
+:plantuml-server-url: http://www.plantuml.com/plantuml
+:revdate: 07.01.2019
+:revnumber: 0.9
+
+:toc:
+
+= Guidelines for Labels and Annotations for OpenShift applications
+
+## Terminology
+
+Software System:: Highest level of abstraction that delivers value to its users, whether they are human or not. An application is composed of one or more `Component`s.
+
+Application:: An abstraction that encapsulates the value delivered by the software system. A software system is composed of one or more `Application`s.
+
+Component:: A component is a set of kubernetes resources, for hosting code or data, that needs to be running in order for the overall software system to work. Each component is a seperately deployable and runnable unit.
+
+## Labels
+
+The following table defines common labels applications deployed on OpenShift should use Labels that are marked __REC__ are recommended. Those marked __OPT__ are optional. The labels should not be relied upon for operational purposes.
+
+You can find more information on the Kubernetes labels, prefixed with app.kubernetes.io, in the https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/[Kubernetes documentation].
+
+TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, Services, Routes, ConfigMaps, PersistenVolumeClaims etc., including any custom resource definitions (CRDs).
+
+
+.Labels
+[%header,cols="32%,^.8%,40%,20%"]
+|===
+| Name |  Status | Description | Example
+
+| app.kubernetes.io/part-of
+| REC
+| The name of the top level software system this resource is part of
+| ticketmonster
+
+| app.kubernetes.io/name
+| REC
+| The name, reflecting component.
+| mysql
+
+| app.kubernetes.io/component
+| REC
+| This is the role/type of the component
+| frontend
+
+| app.kubernetes.io/managed-by
+| REC
+| The tool being used to manage the operation of the component
+| odo
+
+| app.kubernetes.io/instance
+| OPT
+| A name identifying the application, usually used if different from `app.kubernetes.io/name`
+| accounts
+
+| app.kubernetes.io/version
+| OPT
+| The current version of the component (e.g., a semantic version, revision hash, etc.)
+| 1.0.0
+|===
+
+
+
+.Values for `app.kubernetes.io/component` label
+[%header,cols="30%,70%"]
+|===
+| Value | Description
+
+| frontend
+| Serves the UI or part of the UI for an application
+
+| backend
+| Usually an application code that is running on a runtime or framework.
+
+| database
+| Data persistence
+
+| integration
+| Integration middleware such as API gateways or single-sign-on software
+
+| cache
+|
+
+|queue
+|
+
+|===
+
+## Annotations
+
+.Annotations
+[%header,cols="30%,^.10%,40%,20%"]
+|===
+| Name | Status | Description | Example
+
+| app.openshift.io/git-uri
+| REC
+| The git url for the source code of application
+| git://git.kernel.org/pub/scm/linux.git
+
+| app.openshift.io/git-ref
+| REC
+| Branch, tag or commit hash for the application if omitted master is assumed
+| v1.0.0
+
+|===
+
+## Examples
+
+### Simple microservice with a database
+Node.js based rest service with a database (mongodb) backing
+[plantuml]
+----
+@startuml
+rectangle cool-service {
+    database mongodb   [
+               \t<b>mongodb for storing data
+            ----
+            <b>app.kubernetes.io/part-of :</b>cool-service
+            <b>app.kubernetes.io/name :</b> mongodb
+            <b>app.kubernetes.io/component :</b> database
+            <b>app.kubernetes.io/managed-by :</b> odo
+            <b>app.kubernetes.io/version :</b> 3.6
+        ]
+    rectangle nodejs   [
+            \t\t<b>The node.js service with code</b>
+            ----
+            <b>app.kubernetes.io/part-of :</b> cool-service
+            <b>app.kubernetes.io/name :</b> nodejs
+            <b>app.kubernetes.io/component :</b> frontend
+            <b>app.kubernetes.io/managed-by :</b> odo
+            <b>app.kubernetes.io/version</b> : 10
+            ----
+            <b>app.openshift.io/git-uri :</b> git://git@github.com:gorkem/cool-service.git
+            <b>app.openshift.io/git-ref :</b> master
+        ]
+
+}
+
+@enduml
+----
+
+### A complex system with multiple services
+
+**TODO:** Complete the example
+
+[plantuml]
+----
+@startuml
+left to right direction
+
+rectangle coolstore {
+    together {
+        node cart [
+                    <b>The node.js service with code</b>
+                    ----
+                    <b>app.kubernetes.io/part-of :</b> coolstore
+                    <b>app.kubernetes.io/instance :</b> cart
+                    <b>app.kubernetes.io/name :</b> nodejs
+                    <b>app.kubernetes.io/component :</b> frontend
+                    <b>app.kubernetes.io/managed-by :</b> odo
+                    <b>app.kubernetes.io/version</b> : 10
+                    ----
+                    <b>app.openshift.io/git-uri :</b> git://git@github.com:gorkem/cart-service.git
+                    <b>app.openshift.io/git-ref :</b> master
+            ]
+    }
+   together {
+    rectangle catalog {
+            database catalogdb  [
+                    <b>mongodb for storing data
+                    ----
+                    <b>app.kubernetes.io/part-of :</b> coolstore
+                    <b>app.kubernetes.io/instance :</b> catalog
+                    <b>app.kubernetes.io/name :</b> mongodb
+                    <b>app.kubernetes.io/component :</b> database
+                    <b>app.kubernetes.io/managed-by :</b> odo
+                    <b>app.kubernetes.io/version :</b> 3.6
+                ]
+            rectangle catalog   [
+                    <b>The node.js service with code</b>
+                    ----
+                    <b>app.kubernetes.io/part-of :</b> coolstore
+                    <b>app.kubernetes.io/instance :</b> catalog
+                    <b>app.kubernetes.io/name :</b> nodejs
+                    <b>app.kubernetes.io/component :</b> frontend
+                    <b>app.kubernetes.io/managed-by :</b> odo
+                    <b>app.kubernetes.io/version</b> : 10
+                    ----
+                    <b>app.openshift.io/git-uri :</b> git://git@github.com:gorkem/catalog-service.git
+                    <b>app.openshift.io/git-ref :</b> master
+                ]
+        }
+    }
+    together {
+        rectangle inventory {
+            database postgresql [
+                    <b>postgresql database
+                    ----
+                    <b>app.kubernetes.io/part-of :</b> coolstore
+                    <b>app.kubernetes.io/instance :</b> in
+                    <b>app.kubernetes.io/name :</b> postgresql
+                    <b>app.kubernetes.io/component :</b> database
+                    <b>app.kubernetes.io/managed-by :</b> odo
+                    <b>app.kubernetes.io/version :</b> 11
+                ]
+            rectangle java8 [
+                    <b>The node.js service with code</b>
+                    ----
+                    <b>app.kubernetes.io/part-of :</b> coolstore
+                    <b>app.kubernetes.io/instance :</b> inventory
+                    <b>app.kubernetes.io/name :</b> nodejs
+                    <b>app.kubernetes.io/component :</b> frontend
+                    <b>app.kubernetes.io/managed-by :</b> odo
+                    <b>app.kubernetes.io/version</b> : 10
+                    ----
+                    <b>app.openshift.io/git-uri :</b> git://git@github.com:gorkem/inventory-service.git
+                    <b>app.openshift.io/git-ref :</b> master
+                ]
+        }
+    }
+}
+
+@enduml
+----
+[TIP]
+It is a good practive to check if comination of
+`app.kubernetes.io/part-of`, `app.kubernetes.io/instance`, `app.kubernetes.io/name` labels  lead to a meaningful identifier without repeating same parts. For instance `coolstore.catalog.mongodb`. A repeated part is usually an indicator of a label that can be avoided.
