@@ -44,12 +44,12 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 | frontend
 
 | app.kubernetes.io/managed-by
-| REC
+| OPT
 | The tool being used to manage the operation of the component
 | odo
 
 | app.kubernetes.io/instance
-| OPT
+| REC
 | A name identifying the application, usually used if different from `app.kubernetes.io/name`
 | accounts
 
@@ -129,7 +129,7 @@ rectangle cool-service {
             <b>app.kubernetes.io/name :</b> nodejs
             <b>app.kubernetes.io/component :</b> frontend
             <b>app.kubernetes.io/managed-by :</b> odo
-            <b>app.kubernetes.io/version</b> : 10
+            <b>app.kubernetes.io/version</b> : 1.0.1
             ----
             <b>app.openshift.io/git-uri :</b> git://git@github.com:gorkem/cool-service.git
             <b>app.openshift.io/git-ref :</b> master
@@ -141,8 +141,6 @@ rectangle cool-service {
 ----
 
 ### A complex system with multiple services
-
-**TODO:** Complete the example
 
 [plantuml]
 ----
@@ -224,5 +222,5 @@ rectangle coolstore {
 @enduml
 ----
 [TIP]
-It is a good practive to check if comination of
-`app.kubernetes.io/part-of`, `app.kubernetes.io/instance`, `app.kubernetes.io/name` labels  lead to a meaningful identifier without repeating same parts. For instance `coolstore.catalog.mongodb`. A repeated part is usually an indicator of a label that can be avoided.
+It is a good practice to check if combination of
+`app.kubernetes.io/part-of`, `app.kubernetes.io/instance`, `app.kubernetes.io/name` labels  lead to a meaningful identifier without repeating parts. For instance `coolstore.catalog.mongodb`. A repeated part is usually an indicator of a label that can be avoided.
