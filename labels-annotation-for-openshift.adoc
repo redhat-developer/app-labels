@@ -93,14 +93,14 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 |===
 | Name | Status | Description | Example
 
-| app.openshift.io/git-uri
+| app.openshift.io/vcs-uri
 | REC
-| The git url for the source code of application
+| URL for the source code under version control
 | git://git.kernel.org/pub/scm/linux.git
 
-| app.openshift.io/git-ref
+| app.openshift.io/vcs-ref
 | REC
-| Branch, tag or commit hash for the application if omitted master is assumed
+| Identifier for the version of the source code. Can be branch, tag or commit SHA for the application. If omitted master head of the default branch is assumed
 | v1.0.0
 
 |===
@@ -131,8 +131,8 @@ rectangle cool-service {
             <b>app.kubernetes.io/managed-by :</b> odo
             <b>app.kubernetes.io/version</b> : 1.0.1
             ----
-            <b>app.openshift.io/git-uri :</b> git://git@github.com:gorkem/cool-service.git
-            <b>app.openshift.io/git-ref :</b> master
+            <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/cool-service.git
+            <b>app.openshift.io/vcs-ref :</b> master
         ]
 
 }
@@ -159,8 +159,8 @@ rectangle coolstore {
                     <b>app.kubernetes.io/managed-by :</b> odo
                     <b>app.kubernetes.io/version</b> : 10
                     ----
-                    <b>app.openshift.io/git-uri :</b> git://git@github.com:gorkem/cart-service.git
-                    <b>app.openshift.io/git-ref :</b> master
+                    <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/cart-service.git
+                    <b>app.openshift.io/vcs-ref :</b> master
             ]
     }
    together {
@@ -185,12 +185,12 @@ rectangle coolstore {
                     <b>app.kubernetes.io/managed-by :</b> odo
                     <b>app.kubernetes.io/version</b> : 10
                     ----
-                    <b>app.openshift.io/git-uri :</b> git://git@github.com:gorkem/catalog-service.git
-                    <b>app.openshift.io/git-ref :</b> master
+                    <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/catalog-service.git
+                    <b>app.openshift.io/vcs-ref :</b> master
                 ]
         }
     }
-    together {
+    together{
         rectangle inventory {
             database postgresql [
                     <b>postgresql database
@@ -212,8 +212,8 @@ rectangle coolstore {
                     <b>app.kubernetes.io/managed-by :</b> odo
                     <b>app.kubernetes.io/version</b> : 10
                     ----
-                    <b>app.openshift.io/git-uri :</b> git://git@github.com:gorkem/inventory-service.git
-                    <b>app.openshift.io/git-ref :</b> master
+                    <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/inventory-service.git
+                    <b>app.openshift.io/vcs-ref :</b> master
                 ]
         }
     }
