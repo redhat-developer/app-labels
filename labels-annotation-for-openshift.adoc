@@ -60,13 +60,13 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 
 | app.openshift.io/runtime
 | OPT
-| The runtime for used for running the component
+| The runtime to be used to bootstrap the component
 | spring-boot
 
 | app.openshift.io/runtime-version:
 | OPT
 | The version of the runtime
-| 1.5.17
+| e.g. `1.5.17` for Spring Boot
 |===
 
 
