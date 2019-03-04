@@ -57,6 +57,16 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 | OPT
 | The current version of the component (e.g., a semantic version, revision hash, etc.)
 | 1.0.0
+
+| app.openshift.io/runtime
+| OPT
+| The runtime to be used to bootstrap the component
+| spring-boot
+
+| app.openshift.io/runtime-version:
+| OPT
+| The version of the runtime
+| e.g. `1.5.17` for Spring Boot
 |===
 
 
@@ -130,6 +140,8 @@ rectangle cool-service {
             <b>app.kubernetes.io/component :</b> frontend
             <b>app.kubernetes.io/managed-by :</b> odo
             <b>app.kubernetes.io/version</b> : 1.0.1
+            <b>app.openshift.io/runtime</b>: nodejs
+            <b> app.openshift.io/runtime-version</b>: 10.14.1
             ----
             <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/cool-service.git
             <b>app.openshift.io/vcs-ref :</b> master
@@ -158,6 +170,8 @@ rectangle coolstore {
                     <b>app.kubernetes.io/component :</b> frontend
                     <b>app.kubernetes.io/managed-by :</b> odo
                     <b>app.kubernetes.io/version</b> : 10
+                    <b>app.openshift.io/runtime</b>: nodejs
+                    <b> app.openshift.io/runtime-version</b>: 10.14.1
                     ----
                     <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/cart-service.git
                     <b>app.openshift.io/vcs-ref :</b> master
@@ -184,6 +198,8 @@ rectangle coolstore {
                     <b>app.kubernetes.io/component :</b> frontend
                     <b>app.kubernetes.io/managed-by :</b> odo
                     <b>app.kubernetes.io/version</b> : 10
+                    <b>app.openshift.io/runtime</b>: nodejs
+                    <b> app.openshift.io/runtime-version</b>: 10.14.1
                     ----
                     <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/catalog-service.git
                     <b>app.openshift.io/vcs-ref :</b> master
@@ -211,6 +227,8 @@ rectangle coolstore {
                     <b>app.kubernetes.io/component :</b> frontend
                     <b>app.kubernetes.io/managed-by :</b> odo
                     <b>app.kubernetes.io/version</b> : 10
+                    <b>app.openshift.io/runtime</b>: nodejs
+                    <b>app.openshift.io/runtime-version</b>: 10.14.1
                     ----
                     <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/inventory-service.git
                     <b>app.openshift.io/vcs-ref :</b> master
