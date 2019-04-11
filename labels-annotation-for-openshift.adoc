@@ -8,9 +8,9 @@
 
 ## Terminology
 
-Software System:: Highest level of abstraction that delivers value to its users, whether they are human or not. An application is composed of one or more `Component`s.
+Software System:: Highest level of abstraction that delivers value to its users, whether they are human or not. A software system is composed of one or more `Application`s.
 
-Application:: An abstraction that encapsulates the value delivered by the software system. A software system is composed of one or more `Application`s.
+Application:: An abstraction that encapsulates the value delivered by the software system. An application is composed of one or more `Component`s.
 
 Component:: A component is a set of kubernetes resources, for hosting code or data, that needs to be running in order for the overall software system to work. Each component is a seperately deployable and runnable unit.
 
