@@ -67,11 +67,6 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 | OPT
 | The version of the runtime
 | e.g. `1.5.17` for Spring Boot
-
-| app.openshift.io/connects-to:
-| OPT
-| The component that this component is connecting to (e.g. a component making API calls to another `service` ) 
-| e.g. `1.5.17` for Spring Boot
 |===
 
 
@@ -118,6 +113,11 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 | Identifier for the version of the source code. Can be branch, tag or commit SHA for the application. If omitted master head of the default branch is assumed
 | v1.0.0
 
+| app.openshift.io/connects-to:
+| OPT
+| The component that this component is connecting to (e.g. a component making API calls to another `service` ) 
+| e.g. Component `front-end` has a `connects-to` which has a value `backend`
+
 |===
 
 ## Examples
@@ -150,7 +150,10 @@ rectangle cool-service {
             ----
             <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/cool-service.git
             <b>app.openshift.io/vcs-ref :</b> master
+            <b>app.openshift.io/connects-to :</b> mongodb
+
         ]
+    nodejs --> mongodb
 
 }
 
@@ -208,10 +211,12 @@ rectangle coolstore {
                     ----
                     <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/catalog-service.git
                     <b>app.openshift.io/vcs-ref :</b> master
+                    <b>app.openshift.io/connects-to :</b> mongodb
                 ]
+                catalog --> catalogdb
         }
     }
-    together{
+    together {
         rectangle inventory {
             database postgresql [
                     <b>postgresql database
@@ -237,7 +242,10 @@ rectangle coolstore {
                     ----
                     <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/inventory-service.git
                     <b>app.openshift.io/vcs-ref :</b> master
+                    <b>app.openshift.io/connects-to :</b> mongodb
+
                 ]
+             java8 --> postgresql
         }
     }
 }
