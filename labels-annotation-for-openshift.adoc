@@ -211,7 +211,7 @@ rectangle coolstore {
                     ----
                     <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/catalog-service.git
                     <b>app.openshift.io/vcs-ref :</b> master
-                    <b>app.openshift.io/connects-to :</b> catalogdb
+                    <b>app.openshift.io/connects-to :</b> mongodb
                 ]
                 catalog --> catalogdb
         }
