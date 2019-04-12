@@ -67,6 +67,11 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 | OPT
 | The version of the runtime
 | e.g. `1.5.17` for Spring Boot
+
+| app.openshift.io/connects-to:
+| OPT
+| The component that this component is connecting to (e.g. a component making API calls to another `service` ) 
+| e.g. `1.5.17` for Spring Boot
 |===
 
 
