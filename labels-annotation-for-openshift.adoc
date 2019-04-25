@@ -115,8 +115,8 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 
 | app.openshift.io/connects-to:
 | OPT
-| The component that this component is connecting to (e.g. a component making API calls to another `service` )
-| e.g. Component `front-end` has a `connects-to` which has a value `backend`
+| The `app.openshift.io/connects-to` contains the value of the label `app.kubernetes.io/instance` in the component being connected to.
+| e.g. Component `catalog` has a `connects-to` annotation which has a value `inventory`. 
 
 |===
 
@@ -169,13 +169,45 @@ left to right direction
 
 rectangle coolstore {
     together {
-        node cart [
+        rectangle inventory {
+            database postgresql [
+                    <b>postgresql database
+                    ----
+                    <b>app.kubernetes.io/part-of :</b> coolstore
+                    <b>app.kubernetes.io/instance :</b> inventory
+                    <b>app.kubernetes.io/name :</b> postgresql
+                    <b>app.kubernetes.io/component :</b> database
+                    <b>app.kubernetes.io/managed-by :</b> odo
+                    <b>app.kubernetes.io/version :</b> 11
+                ]
+            rectangle nodeservice [
+                    <b>The node.js service with code</b>
+                    ----
+                    <b>app.kubernetes.io/part-of :</b> coolstore
+                    <b>app.kubernetes.io/instance :</b> inventory
+                    <b>app.kubernetes.io/name :</b> nodejs
+                    <b>app.kubernetes.io/component :</b> backend
+                    <b>app.kubernetes.io/managed-by :</b> odo
+                    <b>app.kubernetes.io/version</b> : 10
+                    <b>app.openshift.io/runtime</b>: nodejs
+                    <b>app.openshift.io/runtime-version</b>: 10.14.1
+                    ----
+                    <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/inventory-service.git
+                    <b>app.openshift.io/vcs-ref :</b> master
+
+                ]
+        }
+    }
+
+    together {
+        rectangle cart{
+             node cart [
                     <b>The node.js service with code</b>
                     ----
                     <b>app.kubernetes.io/part-of :</b> coolstore
                     <b>app.kubernetes.io/instance :</b> cart
                     <b>app.kubernetes.io/name :</b> nodejs
-                    <b>app.kubernetes.io/component :</b> frontend
+                    <b>app.kubernetes.io/component :</b> backend
                     <b>app.kubernetes.io/managed-by :</b> odo
                     <b>app.kubernetes.io/version</b> : 10
                     <b>app.openshift.io/runtime</b>: nodejs
@@ -183,10 +215,13 @@ rectangle coolstore {
                     ----
                     <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/cart-service.git
                     <b>app.openshift.io/vcs-ref :</b> master
+                    <b>app.openshift.io/connects-to :</b> '["inventory"]'
             ]
+            cart --> inventory
+      }
     }
-   together {
-    rectangle catalog {
+    together {
+        rectangle catalog {
             database catalogdb  [
                     <b>mongodb for storing data
                     ----
@@ -211,43 +246,12 @@ rectangle coolstore {
                     ----
                     <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/catalog-service.git
                     <b>app.openshift.io/vcs-ref :</b> master
-                    <b>app.openshift.io/connects-to :</b> mongodb
+                    <b>app.openshift.io/connects-to :</b> '["cart"]'
                 ]
-                catalog --> catalogdb
+                catalog --> cart
         }
     }
-    together {
-        rectangle inventory {
-            database postgresql [
-                    <b>postgresql database
-                    ----
-                    <b>app.kubernetes.io/part-of :</b> coolstore
-                    <b>app.kubernetes.io/instance :</b> inventory
-                    <b>app.kubernetes.io/name :</b> postgresql
-                    <b>app.kubernetes.io/component :</b> database
-                    <b>app.kubernetes.io/managed-by :</b> odo
-                    <b>app.kubernetes.io/version :</b> 11
-                ]
-            rectangle java8 [
-                    <b>The node.js service with code</b>
-                    ----
-                    <b>app.kubernetes.io/part-of :</b> coolstore
-                    <b>app.kubernetes.io/instance :</b> inventory
-                    <b>app.kubernetes.io/name :</b> nodejs
-                    <b>app.kubernetes.io/component :</b> frontend
-                    <b>app.kubernetes.io/managed-by :</b> odo
-                    <b>app.kubernetes.io/version</b> : 10
-                    <b>app.openshift.io/runtime</b>: nodejs
-                    <b>app.openshift.io/runtime-version</b>: 10.14.1
-                    ----
-                    <b>app.openshift.io/vcs-uri :</b> git://git@github.com:gorkem/inventory-service.git
-                    <b>app.openshift.io/vcs-ref :</b> master
-                    <b>app.openshift.io/connects-to :</b> postgresql
-
-                ]
-             java8 --> postgresql
-        }
-    }
+    
 }
 
 @enduml
