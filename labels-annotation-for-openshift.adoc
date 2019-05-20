@@ -116,7 +116,7 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 | app.openshift.io/connects-to:
 | OPT
 | The `app.openshift.io/connects-to` contains the value of the label `app.kubernetes.io/instance` in the component being connected to.
-| e.g. Component `catalog` has a `connects-to` annotation which has a value `inventory`. 
+| e.g. `['inventory','cart']` , `inventory` 
 
 |===
 
