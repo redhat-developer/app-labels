@@ -116,8 +116,12 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 | app.openshift.io/connects-to:
 | OPT
 | The `app.openshift.io/connects-to` contains the value of the label `app.kubernetes.io/instance` in the component being connected to.
-| e.g. `['inventory','cart']` , `inventory` 
+| e.g. `['inventory','cart']` , `inventory`
 
+| console.alpha.openshift.io/overview-app-route
+| OPT
+| Annote the route that you would like to be primary on the console UI
+| console.alpha.openshift.io/overview-app-route: ‘true’
 |===
 
 ## Examples
@@ -251,7 +255,7 @@ rectangle coolstore {
                 catalog --> cart
         }
     }
-    
+
 }
 
 @enduml
