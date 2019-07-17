@@ -1,0 +1,7 @@
+= Guidelines for Labels and Annotations for OpenShift applications
+
+Guidelines for labels and annotation that are recognized by OpenShift ecosystem.
+These labels and annotations do not affect the way applications are deployed and
+run but they are highly recommended.
+
+link:labels-annotation-for0openshift.adoc[Read the Guidelines]
