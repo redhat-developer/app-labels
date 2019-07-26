@@ -50,7 +50,7 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 
 | app.kubernetes.io/instance
 | REC
-| A name identifying the application, usually used if different from `app.kubernetes.io/name`
+| A unique name identifying the application, usually used if different from `app.kubernetes.io/name`
 | accounts
 
 | app.kubernetes.io/version
@@ -178,7 +178,7 @@ rectangle coolstore {
                     <b>postgresql database
                     ----
                     <b>app.kubernetes.io/part-of :</b> coolstore
-                    <b>app.kubernetes.io/instance :</b> inventory
+                    <b>app.kubernetes.io/instance :</b> inventoryDB
                     <b>app.kubernetes.io/name :</b> postgresql
                     <b>app.kubernetes.io/component :</b> database
                     <b>app.kubernetes.io/managed-by :</b> odo
@@ -230,7 +230,7 @@ rectangle coolstore {
                     <b>mongodb for storing data
                     ----
                     <b>app.kubernetes.io/part-of :</b> coolstore
-                    <b>app.kubernetes.io/instance :</b> catalog
+                    <b>app.kubernetes.io/instance :</b> catalogDB
                     <b>app.kubernetes.io/name :</b> mongodb
                     <b>app.kubernetes.io/component :</b> database
                     <b>app.kubernetes.io/managed-by :</b> odo
@@ -261,5 +261,6 @@ rectangle coolstore {
 @enduml
 ----
 [TIP]
-It is a good practice to check if combination of
-`app.kubernetes.io/part-of`, `app.kubernetes.io/instance`, `app.kubernetes.io/name` labels  lead to a meaningful identifier without repeating parts. For instance `coolstore.catalog.mongodb`. A repeated part is usually an indicator of a label that can be avoided.
+The label `app.kubernetes.io/instance` should lead to a meaningful identifier. The label 
+`app.kubernetes.io/part-of` is used to identify the application grouping and 
+`app.kubernetes.io/instance` identifies the component name within the application grouping.
