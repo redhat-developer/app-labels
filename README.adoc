@@ -3,3 +3,12 @@
 Guidelines for labels and annotation that are recognized by OpenShift ecosystem.
 These labels and annotations do not affect the way applications are deployed and
 run but they are highly recommended.
+
+
+== How to generate the docs
+
+Convert the AsciiDoc to PDF and HTML using Asciidoctor by invoking the `process-resources` goal (configured as the default goal):
+
+ $ mvn
+
+Open the file _target/generated-docs/labels-annotation-for-openshift.pdf_ or _target/generated-docs/labels-annotation-for-openshift.html_

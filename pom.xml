@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>io.openshift</groupId>
+    <artifactId>labeling</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>Label and Annotation recommendations</name>
+    <description>Label and Annotation recommendations for OpenShift.</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <asciidoctor.maven.plugin.version>2.0.0-RC.1</asciidoctor.maven.plugin.version>
+        <asciidoctorj.version>2.0.0</asciidoctorj.version>
+        <asciidoctorj.diagram.version>1.5.18</asciidoctorj.diagram.version>
+        <asciidoctorj.pdf.version>1.5.0-alpha.18</asciidoctorj.pdf.version>
+        <jruby.version>9.2.7.0</jruby.version>
+    </properties>
+
+    <build>
+        <defaultGoal>process-resources</defaultGoal>
+        <plugins>
+            <plugin>
+                <groupId>org.asciidoctor</groupId>
+                <artifactId>asciidoctor-maven-plugin</artifactId>
+                <version>${asciidoctor.maven.plugin.version}</version>
+                <dependencies>
+                    <!-- Comment this section to use the default jruby artifact provided by the plugin -->
+                    <dependency>
+                        <groupId>org.jruby</groupId>
+                        <artifactId>jruby-complete</artifactId>
+                        <version>${jruby.version}</version>
+                    </dependency>
+                    <!-- Comment this section to use the default AsciidoctorJ artifact provided by the plugin -->
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj</artifactId>
+                        <version>${asciidoctorj.version}</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.asciidoctor</groupId>
+                        <artifactId>asciidoctorj-diagram</artifactId>
+                        <version>${asciidoctorj.diagram.version}</version>
+                    </dependency>
+                    <dependency>
+                      <groupId>org.asciidoctor</groupId>
+                      <artifactId>asciidoctorj-pdf</artifactId>
+                      <version>${asciidoctorj.pdf.version}</version>
+                  </dependency>
+                </dependencies>
+                <configuration>
+                    <sourceDirectory>./</sourceDirectory>
+                    <requires>
+                        <require>asciidoctor-diagram</require>
+                    </requires>
+                    <attributes>
+                    <!-- Example below shows how to specify in this pom instead of System's PATH, the location of dot command of Graphviz, required by PlantUML libraries -->
+                    <!-- Windows:
+                        <graphvizdot>C:\Program Files (x86)\Graphviz2.38\bin\dot.exe</graphvizdot>
+                    -->
+                    <!-- *nix :
+                        <graphvizdot>/usr/local/bin/dot</graphvizdot>
+                    -->
+                    </attributes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>generate-html-doc</id>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>process-asciidoc</goal>
+                        </goals>
+                        <configuration>
+                            <backend>html5</backend>
+                            <attributes>
+                                <imagesdir>./images</imagesdir>
+                                <toc>left</toc>
+                                <icons>font</icons>
+                                <sectanchors>true</sectanchors>
+                                <idprefix/>
+                                <idseparator>-</idseparator>
+                            </attributes>
+                        </configuration>
+                    </execution>
+                    <execution>
+                      <id>generate-pdf-doc</id>
+                      <phase>generate-resources</phase>
+                      <goals>
+                          <goal>process-asciidoc</goal>
+                      </goals>
+                      <configuration>
+                          <backend>pdf</backend>
+                          <!-- Since 1.5.0-alpha.9 PDF back-end can use 'rouge' as well as 'coderay'
+                          for source highlighting -->
+                          <!-- Due to a known issue on windows, it is recommended to use 'coderay' until an new version of 'rouge' is released.
+                                  see discussions: https://github.com/asciidoctor/asciidoctor-maven-examples/pull/58
+                                                   https://github.com/asciidoctor/asciidoctorj-pdf/issues/3
+                                                   https://github.com/jneen/rouge/issues/661
+                          -->
+                          <sourceHighlighter>coderay</sourceHighlighter>
+                          <attributes>
+                              <icons>font</icons>
+                              <pagenums/>
+                              <toc/>
+                              <idprefix/>
+                              <idseparator>-</idseparator>
+                          </attributes>
+                      </configuration>
+                  </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
