@@ -9,6 +9,8 @@ run but they are highly recommended.
 
 Convert the AsciiDoc to PDF and HTML using Asciidoctor by invoking the `process-resources` goal (configured as the default goal):
 
- $ mvn
+ $ ./mvnw
+
+IMPORTANT: You need to install `graphviz` for the diagrams to show.
 
 Open the file _target/generated-docs/labels-annotation-for-openshift.pdf_ or _target/generated-docs/labels-annotation-for-openshift.html_
