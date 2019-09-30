@@ -120,7 +120,7 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 
 | console.alpha.openshift.io/overview-app-route
 | OPT
-| Annote the route that you would like to be primary on the console UI
+| Annotate the route that you would like to be primary on the console UI
 | console.alpha.openshift.io/overview-app-route: ‘true’
 |===
 
