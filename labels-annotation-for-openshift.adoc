@@ -67,6 +67,11 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 | OPT
 | The version of the runtime
 | e.g. `1.5.17` for Spring Boot
+
+| app.openshift.io/pipeline-ref
+| OPT
+| A reference to an existing tekton pipeline, associating a workload and pipeline together
+| e.g. `build-pipeline`
 |===
 
 
