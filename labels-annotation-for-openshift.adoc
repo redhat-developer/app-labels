@@ -16,7 +16,7 @@ Component:: A component is a set of kubernetes resources, for hosting code or da
 
 ## Labels
 
-The following table defines common labels applications deployed on OpenShift should use Labels that are marked __REC__ are recommended. Those marked __OPT__ are optional. The labels should not be relied upon for operational purposes.
+The following table defines common labels applications deployed on OpenShift should use. Labels that are marked __REC__ are recommended. Those marked __OPT__ are optional. The labels should not be relied upon for operational purposes.
 
 You can find more information on the Kubernetes labels, prefixed with app.kubernetes.io, in the https://kubernetes.io/docs/concepts/overview/working-with-objects/common-labels/[Kubernetes documentation].
 
@@ -30,7 +30,7 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 
 | app.kubernetes.io/part-of
 | REC
-| The name of the top level software system this resource is part of
+| The name of the top level software system this resource is part of.
 | ticketmonster
 
 | app.kubernetes.io/name
@@ -40,17 +40,17 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 
 | app.kubernetes.io/component
 | REC
-| This is the role/type of the component
+| This is the role/type of the component.
 | frontend
 
 | app.kubernetes.io/managed-by
 | OPT
-| The tool being used to manage the operation of the component
+| The tool being used to manage the operation of the component.
 | odo
 
 | app.kubernetes.io/instance
 | REC
-| A unique name identifying the application, usually used if different from `app.kubernetes.io/name`
+| A unique name identifying the application, usually used if different from `app.kubernetes.io/name`.
 | accounts
 
 | app.kubernetes.io/version
@@ -60,12 +60,12 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 
 | app.openshift.io/runtime
 | OPT
-| The runtime to be used to bootstrap the component
+| The runtime to be used to bootstrap the component.
 | spring-boot
 
 | app.openshift.io/runtime-version:
 | OPT
-| The version of the runtime
+| The version of the runtime.
 | e.g. `1.5.17` for Spring Boot
 |===
 
@@ -77,16 +77,16 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 | Value | Description
 
 | frontend
-| Serves the UI or part of the UI for an application
+| Serves the UI or part of the UI for an application.
 
 | backend
 | Usually an application code that is running on a runtime or framework.
 
 | database
-| Data persistence
+| Data persistence.
 
 | integration
-| Integration middleware such as API gateways or single-sign-on software
+| Integration middleware such as API gateways or single-sign-on software.
 
 | cache
 |
@@ -105,22 +105,22 @@ TIP: Labels must be applied to ALL resources, DeploymentConfigs, BuildConfigs, S
 
 | app.openshift.io/vcs-uri
 | REC
-| URI for the source code under version control
+| URI for the source code under version control.
 | git://git.kernel.org/pub/scm/linux.git
 
 | app.openshift.io/vcs-ref
 | REC
-| Identifier for the version of the source code. Can be branch, tag or commit SHA for the application. If omitted master head of the default branch is assumed
+| Identifier for the version of the source code. Can be branch, tag or commit SHA for the application. If omitted master head of the default branch is assumed.
 | v1.0.0
 
-| app.openshift.io/connects-to:
+| app.openshift.io/connects-to
 | OPT
 | The `app.openshift.io/connects-to` contains the value of the label `app.kubernetes.io/instance` in the component being connected to.
 | e.g. `['inventory','cart']` , `inventory`
 
 | console.alpha.openshift.io/overview-app-route
 | OPT
-| Annotate the route that you would like to be primary on the console UI
+| Annotate the route that you would like to be primary on the console UI.
 | console.alpha.openshift.io/overview-app-route: ‘true’
 |===
 
