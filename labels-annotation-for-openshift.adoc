@@ -263,4 +263,4 @@ rectangle coolstore {
 [TIP]
 The label `app.kubernetes.io/instance` should lead to a meaningful identifier. The label 
 `app.kubernetes.io/part-of` is used to identify the application grouping and 
-`app.kubernetes.io/instance` identifies the component name within the application grouping.
+`app.kubernetes.io/component` identifies the component name within the application grouping.
